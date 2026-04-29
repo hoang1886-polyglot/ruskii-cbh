@@ -1,131 +1,132 @@
-const ADMIN_EMAILS_LOCAL = ['hoang1886@gmail.com']; // keep in sync with auth.js
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin — Говори</title>
+  <link rel="stylesheet" href="css/style.css"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
 
-let pendingExam = null;
+<nav class="nav">
+  <div class="nav-brand">
+    <span class="nav-logo">Г</span>
+    <span class="nav-name">Говори — Admin</span>
+  </div>
+  <div class="nav-links">
+    <a href="index.html" class="nav-link">← Back to Site</a>
+  </div>
+  <div class="nav-auth">
+    <div id="authLoggedIn" style="display:none">
+      <span class="user-greeting" id="userGreeting"></span>
+      <button class="btn btn-ghost" onclick="logout()">Sign Out</button>
+    </div>
+  </div>
+</nav>
 
-document.addEventListener('DOMContentLoaded', async () => {
-  const { data: { user } } = await _supabase.auth.getUser();
+<main class="admin-page" id="adminPage" style="display:none">
+  <h1>Exam Manager</h1>
+  <p class="sub">Upload a JSON file to publish a new exam. Only admins can see this page.</p>
 
-  if (!user || !ADMIN_EMAILS_LOCAL.includes(user.email)) {
-    document.getElementById('accessDenied').style.display = 'block';
-    return;
-  }
+  <!-- UPLOAD ZONE -->
+  <div class="upload-zone" onclick="document.getElementById('jsonFileInput').click()">
+    <div class="upload-zone-icon">📂</div>
+    <h3>Upload Exam JSON</h3>
+    <p>Click to choose a .json exam file, or drag and drop it here</p>
+    <input type="file" id="jsonFileInput" accept=".json" onchange="handleFileUpload(event)"/>
+  </div>
 
-  document.getElementById('adminPage').style.display = 'block';
-  loadAdminExams();
-})();
+  <!-- JSON PREVIEW -->
+  <div id="previewSection" style="display:none;margin-bottom:32px">
+    <h2 style="font-family:var(--font-display);margin-bottom:16px">Preview</h2>
+    <div class="sidebar-card" id="previewCard"></div>
+    <div style="display:flex;gap:12px;margin-top:16px">
+      <button class="btn btn-primary" onclick="publishExam()">✅ Publish Exam</button>
+      <button class="btn btn-ghost" onclick="cancelPreview()">Cancel</button>
+    </div>
+  </div>
 
-// ─── FILE UPLOAD ─────────────────────────────────────────────
-function handleFileUpload(e) {
-  const file = e.target.files[0];
-  if (!file) return;
-  if (!file.name.endsWith('.json')) { showToast('Please select a .json file', 'error'); return; }
+  <!-- EXAM LIST -->
+  <h2 style="font-family:var(--font-display);margin-bottom:16px">Published Exams</h2>
+  <div class="exam-list-admin" id="adminExamList">
+    <div style="color:var(--muted);font-size:14px">Loading…</div>
+  </div>
 
-  const reader = new FileReader();
-  reader.onload = (ev) => {
-    try {
-      const json = JSON.parse(ev.target.result);
-      validateAndPreview(json);
-    } catch {
-      showToast('Invalid JSON file. Please check the format.', 'error');
+  <!-- JSON FORMAT GUIDE -->
+  <div style="margin-top:48px">
+    <h2 style="font-family:var(--font-display);margin-bottom:16px">📋 JSON Format Guide</h2>
+    <div class="sidebar-card">
+      <pre style="font-size:13px;line-height:1.7;overflow-x:auto;white-space:pre-wrap;color:var(--ink)">{
+  "title": "Russian Basics — Exam 1",
+  "level": "A1 Beginner",
+  "sections": [
+    {
+      "name": "Multiple Choice",
+      "questions": [
+        {
+          "id": "q1",
+          "type": "mcq",
+          "question": "What does 'Привет' mean?",
+          "options": ["Goodbye", "Hello", "Thank you", "Please"],
+          "correctIndex": 1
+        }
+      ]
+    },
+    {
+      "name": "Fill in the Blank",
+      "questions": [
+        {
+          "id": "q2",
+          "type": "fill",
+          "question": "The Russian word for 'cat' is ___",
+          "answer": "кошка"
+        }
+      ]
+    },
+    {
+      "name": "Listening",
+      "questions": [
+        {
+          "id": "q3",
+          "type": "listening",
+          "question": "Listen and choose the correct translation",
+          "audioUrl": "https://your-storage-url.com/audio/clip1.mp3",
+          "options": ["Good morning", "Good evening", "Good night", "Goodday"],
+          "correctIndex": 0
+        }
+      ]
+    },
+    {
+      "name": "Sentence Ordering",
+      "questions": [
+        {
+          "id": "q4",
+          "type": "ordering",
+          "question": "Arrange the words to form a correct Russian sentence:",
+          "words": ["кошка", "Это", "моя"],
+          "correctOrder": ["Это", "моя", "кошка"]
+        }
+      ]
     }
-  };
-  reader.readAsText(file);
-}
+  ]
+}</pre>
+    </div>
+  </div>
+</main>
 
-// Drag-drop on upload zone
-const uploadZone = document.querySelector('.upload-zone');
-if (uploadZone) {
-  uploadZone.addEventListener('dragover', e => { e.preventDefault(); uploadZone.style.borderColor = 'var(--red)'; });
-  uploadZone.addEventListener('dragleave', () => { uploadZone.style.borderColor = ''; });
-  uploadZone.addEventListener('drop', e => {
-    e.preventDefault(); uploadZone.style.borderColor = '';
-    const file = e.dataTransfer.files[0];
-    if (file) {
-      const fakeEvt = { target: { files: [file] } };
-      handleFileUpload(fakeEvt);
-    }
-  });
-}
+<!-- Access denied -->
+<div id="accessDenied" style="display:none;text-align:center;padding:120px 40px">
+  <div style="font-size:64px;margin-bottom:24px">🔒</div>
+  <h2 style="font-family:var(--font-display);font-size:32px;margin-bottom:12px">Access Denied</h2>
+  <p style="color:var(--muted);margin-bottom:24px">You must be an admin to view this page.</p>
+  <a href="index.html" class="btn btn-primary">Return Home</a>
+</div>
 
-function validateAndPreview(json) {
-  if (!json.title) { showToast('JSON missing "title" field', 'error'); return; }
-  if (!Array.isArray(json.sections)) { showToast('JSON missing "sections" array', 'error'); return; }
-
-  const qCount = json.sections.reduce((acc, s) => acc + (s.questions?.length || 0), 0);
-  pendingExam = json;
-
-  document.getElementById('previewCard').innerHTML = `
-    <div style="display:flex;flex-direction:column;gap:8px">
-      <div style="font-family:var(--font-display);font-size:22px;font-weight:700">${json.title}</div>
-      <div style="color:var(--muted);font-size:14px">Level: ${json.level || 'Not specified'}</div>
-      <div style="color:var(--muted);font-size:14px">Sections: ${json.sections.length}</div>
-      <div style="color:var(--muted);font-size:14px">Total Questions: ${qCount}</div>
-      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px">
-        ${json.sections.map(s => `<span style="background:var(--cream);border:1.5px solid var(--border);border-radius:8px;padding:4px 12px;font-size:13px">${s.name}</span>`).join('')}
-      </div>
-    </div>`;
-  document.getElementById('previewSection').style.display = 'block';
-}
-
-function cancelPreview() {
-  pendingExam = null;
-  document.getElementById('previewSection').style.display = 'none';
-  document.getElementById('jsonFileInput').value = '';
-}
-
-async function publishExam() {
-  if (!pendingExam) return;
-  const qCount = pendingExam.sections.reduce((acc, s) => acc + (s.questions?.length || 0), 0);
-
-  const { error } = await _supabase.from('exams').insert({
-    title:          pendingExam.title,
-    level:          pendingExam.level || null,
-    question_count: qCount,
-    sections:       pendingExam.sections,
-  });
-
-  if (error) { showToast('Failed to publish: ' + error.message, 'error'); return; }
-
-  showToast('Exam published successfully!', 'success');
-  cancelPreview();
-  loadAdminExams();
-}
-
-// ─── LIST EXAMS ──────────────────────────────────────────────
-async function loadAdminExams() {
-  const list = document.getElementById('adminExamList');
-  list.innerHTML = '<div style="color:var(--muted);font-size:14px">Loading…</div>';
-
-  const { data, error } = await _supabase
-    .from('exams')
-    .select('id, title, level, question_count, created_at')
-    .order('created_at', { ascending: false });
-
-  if (error || !data?.length) {
-    list.innerHTML = '<div style="color:var(--muted);font-size:14px">No exams yet. Upload your first one above!</div>';
-    return;
-  }
-
-  list.innerHTML = data.map(exam => `
-    <div class="exam-list-item">
-      <div>
-        <div class="exam-list-item-name">${exam.title}</div>
-        <div class="exam-list-item-meta">
-          ${exam.level || 'No level'} · ${exam.question_count || '?'} questions ·
-          Published ${new Date(exam.created_at).toLocaleDateString()}
-        </div>
-      </div>
-      <div style="display:flex;gap:8px">
-        <a href="exam.html?id=${exam.id}" target="_blank" class="btn btn-ghost" style="font-size:13px">Preview</a>
-        <button class="btn btn-danger" style="font-size:13px" onclick="deleteExam('${exam.id}','${exam.title}')">Delete</button>
-      </div>
-    </div>`).join('');
-}
-
-async function deleteExam(id, title) {
-  if (!confirm(`Delete "${title}"? This cannot be undone.`)) return;
-  const { error } = await _supabase.from('exams').delete().eq('id', id);
-  if (error) { showToast('Delete failed: ' + error.message, 'error'); return; }
-  showToast('Exam deleted.', 'success');
-  loadAdminExams();
-}
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/supabase-client.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/admin.js"></script>
+</body>
+</html>
