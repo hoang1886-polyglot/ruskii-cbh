@@ -4,7 +4,7 @@ const ADMIN_EMAILS_LOCAL = ['hoang1886@gmail.com']; // keep in sync with auth.js
 
 let pendingExam = null;
 
-(async () => {
+document.addEventListener('DOMContentLoaded', async () => {
   const { data: { user } } = await _supabase.auth.getUser();
 
   if (!user || !ADMIN_EMAILS_LOCAL.includes(user.email)) {
