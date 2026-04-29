@@ -31,10 +31,9 @@ document.addEventListener('DOMContentLoaded', async () => {
   document.title = data.title + ' — Говори';
 
   // Lấy dữ liệu dạng chuỗi từ data.sections và dùng JSON.parse để chuyển thành mảng thực tế
-  const parsedSections = typeof data.sections === 'string' ? JSON.parse(data.sections) : data.sections;
+  examData.sections = typeof data.sections === 'string' ? JSON.parse(data.sections) : data.sections;
 
-  // Dùng mảng đã parse để render giao diện
-  renderExam(parsedSections || []);
+  renderExam(examData.sections);
   startTimer();
 })();
 
