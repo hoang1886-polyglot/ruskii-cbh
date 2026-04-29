@@ -314,8 +314,8 @@ function showResults(pct, correct, total, breakdown) {
   document.getElementById('resultsOverlay').style.display = 'block';
   document.getElementById('rScore').textContent = pct + '%';
   document.getElementById('rLabel').textContent =
-    pct >= 80 ? '🎉 Excellent work!' :
-    pct >= 60 ? '👍 Good effort!' :
+    pct >= 80 ? '🎉 Tuyệt vời' :
+    pct >= 60 ? '👍 Có cố gắng!' :
     '📚 Keep practicing!';
   document.getElementById('rBreakdown').innerHTML = `
     <div class="results-row"><span class="label">Total Questions</span><span class="value">${total}</span></div>
