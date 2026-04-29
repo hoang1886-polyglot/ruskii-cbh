@@ -6,15 +6,16 @@ async function loadExams() {
   const grid = document.getElementById('examsGrid');
   if (!grid) return;
 
-  // Load from Supabase
+  grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;color:var(--muted);padding:48px">Loading exams…</div>`;
+
   const { data: exams, error } = await _supabase
     .from('exams')
     .select('id, title, level, question_count')
     .order('created_at', { ascending: true });
 
-  if (error || !exams?.length) {
+  if (error || !exams || !exams.length) {
     grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;color:var(--muted);padding:48px">
-      No exams published yet. Check back soon!
+      No exams published yet. Admin must upload the first exam!
     </div>`;
     return;
   }
@@ -22,8 +23,8 @@ async function loadExams() {
   const { data: { user } } = await _supabase.auth.getUser();
 
   grid.innerHTML = exams.map((exam, i) => {
-    const icon = EXAM_ICONS[i % EXAM_ICONS.length];
-    const locked = !user; // must be logged in to take exam
+    const icon   = EXAM_ICONS[i % EXAM_ICONS.length];
+    const locked = !user;
     return `
       <div class="exam-card ${locked ? 'exam-locked' : ''}"
            onclick="${locked ? "openModal('loginModal')" : `startExam('${exam.id}')`}"
@@ -41,4 +42,6 @@ function startExam(examId) {
   window.location.href = `exam.html?id=${examId}`;
 }
 
-loadExams();
+document.addEventListener('DOMContentLoaded', () => {
+  loadExams();
+});
