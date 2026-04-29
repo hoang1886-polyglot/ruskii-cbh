@@ -30,7 +30,11 @@ document.addEventListener('DOMContentLoaded', async () => {
   document.getElementById('examTitleH').textContent = data.title;
   document.title = data.title + ' — Говори';
 
-  renderExam(data.sections || []);
+  // Lấy dữ liệu dạng chuỗi từ data.sections và dùng JSON.parse để chuyển thành mảng thực tế
+  const parsedSections = typeof data.sections === 'string' ? JSON.parse(data.sections) : data.sections;
+
+  // Dùng mảng đã parse để render giao diện
+  renderExam(parsedSections || []);
   startTimer();
 })();
 
