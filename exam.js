@@ -7,7 +7,7 @@ let timerInt   = null;
 let examId     = null;
 
 // ─── BOOT ────────────────────────────────────────────────────
-(async () => {
+document.addEventListener('DOMContentLoaded', async () => {
   // Auth guard
   const { data: { user } } = await _supabase.auth.getUser();
   if (!user) { window.location.href = 'index.html'; return; }
