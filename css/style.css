@@ -443,3 +443,15 @@ body {
   .exam-sidebar { width: 100%; }
   .exam-header { padding: 0 20px; }
 }
+/* ─── BUTTONS ───────────────────────────────────────────────── */
+
+#authLoggedIn {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+#userGreeting {
+  font-weight: 500;
+  white-space: nowrap;
+}
