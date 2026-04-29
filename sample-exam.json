@@ -1,0 +1,81 @@
+{
+  "title": "Russian Basics — Exam 1",
+  "level": "A1 Beginner",
+  "sections": [
+    {
+      "name": "Multiple Choice",
+      "questions": [
+        {
+          "id": "mc1",
+          "type": "mcq",
+          "question": "What does 'Привет' (Privet) mean?",
+          "options": ["Goodbye", "Hello", "Thank you", "Please"],
+          "correctIndex": 1
+        },
+        {
+          "id": "mc2",
+          "type": "mcq",
+          "question": "Which word means 'book' in Russian?",
+          "options": ["стол", "книга", "дом", "кот"],
+          "correctIndex": 1
+        },
+        {
+          "id": "mc3",
+          "type": "mcq",
+          "question": "How do you say 'Good morning' in Russian?",
+          "options": ["Добрый вечер", "Спокойной ночи", "Доброе утро", "Добрый день"],
+          "correctIndex": 2
+        }
+      ]
+    },
+    {
+      "name": "Fill in the Blank",
+      "questions": [
+        {
+          "id": "f1",
+          "type": "fill",
+          "question": "The Russian word for 'water' is ___ (hint: вода)",
+          "answer": "вода"
+        },
+        {
+          "id": "f2",
+          "type": "fill",
+          "question": "Complete: 'Меня зовут ___' means 'My name is ___'. Type any Russian name.",
+          "answer": "Иван"
+        }
+      ]
+    },
+    {
+      "name": "Listening",
+      "questions": [
+        {
+          "id": "l1",
+          "type": "listening",
+          "question": "Listen to the audio and select the correct translation.",
+          "audioUrl": "https://upload.wikimedia.org/wikipedia/commons/2/21/Simple_english.ogg",
+          "options": ["I love Russia", "Hello, how are you?", "Thank you very much", "Where is the station?"],
+          "correctIndex": 1
+        }
+      ]
+    },
+    {
+      "name": "Sentence Ordering",
+      "questions": [
+        {
+          "id": "o1",
+          "type": "ordering",
+          "question": "Arrange the words to form a correct Russian sentence meaning 'This is my cat':",
+          "words": ["кошка", "Это", "моя"],
+          "correctOrder": ["Это", "моя", "кошка"]
+        },
+        {
+          "id": "o2",
+          "type": "ordering",
+          "question": "Arrange the words to say 'I live in Moscow':",
+          "words": ["Москве", "живу", "в", "Я"],
+          "correctOrder": ["Я", "живу", "в", "Москве"]
+        }
+      ]
+    }
+  ]
+}

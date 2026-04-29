@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Говори — Learn Russian</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-brand">
+    <span class="nav-logo">Г</span>
+    <span class="nav-name">Говори</span>
+  </div>
+  <div class="nav-links" id="navLinks">
+    <a href="index.html" class="nav-link active">Home</a>
+    <a href="exams.html" class="nav-link">Exams</a>
+    <a href="#" class="nav-link" id="adminLink" style="display:none">Admin</a>
+  </div>
+  <div class="nav-auth">
+    <div id="authLoggedOut">
+      <button class="btn btn-ghost" onclick="openModal('loginModal')">Sign In</button>
+      <button class="btn btn-primary" onclick="openModal('registerModal')">Register</button>
+    </div>
+    <div id="authLoggedIn" style="display:none">
+      <span class="user-greeting" id="userGreeting"></span>
+      <button class="btn btn-ghost" onclick="logout()">Sign Out</button>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg">
+    <div class="hero-orb orb1"></div>
+    <div class="hero-orb orb2"></div>
+    <div class="hero-orb orb3"></div>
+    <div class="cyrillic-float" aria-hidden="true">Д Б Ж Э Ю Я Щ Ф Ч Ъ</div>
+  </div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">Master the Russian Language</p>
+    <h1 class="hero-title">Говори<br/><span class="hero-sub">Speak. Think. Live Russian.</span></h1>
+    <p class="hero-desc">Timed exams, listening challenges, sentence puzzles — all crafted to build real fluency. Track every milestone as you go.</p>
+    <div class="hero-cta">
+      <button class="btn btn-hero" onclick="openModal('registerModal')">Start Learning Free</button>
+      <button class="btn btn-ghost-hero" onclick="document.getElementById('examsSection').scrollIntoView({behavior:'smooth'})">Browse Exams ↓</button>
+    </div>
+    <div class="hero-stats">
+      <div class="stat"><span class="stat-num">12</span><span class="stat-label">Exams</span></div>
+      <div class="stat-divider"></div>
+      <div class="stat"><span class="stat-num">4</span><span class="stat-label">Exercise Types</span></div>
+      <div class="stat-divider"></div>
+      <div class="stat"><span class="stat-num">180</span><span class="stat-label">Min per Test</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- EXAMS GRID -->
+<section class="exams-section" id="examsSection">
+  <div class="section-header">
+    <h2 class="section-title">Choose Your Exam</h2>
+    <p class="section-desc">Each exam is a complete test session with a 3-hour countdown timer.</p>
+  </div>
+  <div class="exams-grid" id="examsGrid">
+    <!-- populated by JS -->
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="features-section">
+  <h2 class="section-title center">What's Inside Each Exam</h2>
+  <div class="features-grid">
+    <div class="feature-card">
+      <div class="feature-icon">🔀</div>
+      <h3>Sentence Ordering</h3>
+      <p>Drag and drop scrambled words to reconstruct correct Russian sentences.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🎧</div>
+      <h3>Listening Quiz</h3>
+      <p>Hear native audio clips and choose the correct meaning or response.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">✅</div>
+      <h3>Multiple Choice</h3>
+      <p>Test grammar, vocabulary and comprehension with classic MCQ questions.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">✏️</div>
+      <h3>Fill in the Blank</h3>
+      <p>Complete sentences by typing the missing Russian word or phrase.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-brand">
+    <span class="nav-logo">Г</span>
+    <span class="nav-name">Говори</span>
+  </div>
+  <p class="footer-copy">© 2025 Говори. Built for Russian learners everywhere.</p>
+</footer>
+
+<!-- LOGIN MODAL -->
+<div class="modal-overlay" id="loginModal" onclick="closeModalOutside(event,'loginModal')">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('loginModal')">✕</button>
+    <h2 class="modal-title">Welcome Back</h2>
+    <p class="modal-sub">Sign in to continue your journey</p>
+    <div class="form-group">
+      <label>Email</label>
+      <input type="email" id="loginEmail" class="form-input" placeholder="you@example.com"/>
+    </div>
+    <div class="form-group">
+      <label>Password</label>
+      <input type="password" id="loginPassword" class="form-input" placeholder="••••••••"/>
+    </div>
+    <div class="modal-error" id="loginError"></div>
+    <button class="btn btn-primary full" onclick="login()">Sign In</button>
+    <p class="modal-switch">No account? <a href="#" onclick="switchModal('loginModal','registerModal')">Register here</a></p>
+  </div>
+</div>
+
+<!-- REGISTER MODAL -->
+<div class="modal-overlay" id="registerModal" onclick="closeModalOutside(event,'registerModal')">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('registerModal')">✕</button>
+    <h2 class="modal-title">Create Account</h2>
+    <p class="modal-sub">Begin your Russian adventure today</p>
+    <div class="form-group">
+      <label>Full Name</label>
+      <input type="text" id="regName" class="form-input" placeholder="Your Name"/>
+    </div>
+    <div class="form-group">
+      <label>Email</label>
+      <input type="email" id="regEmail" class="form-input" placeholder="you@example.com"/>
+    </div>
+    <div class="form-group">
+      <label>Password</label>
+      <input type="password" id="regPassword" class="form-input" placeholder="Min 6 characters"/>
+    </div>
+    <div class="modal-error" id="registerError"></div>
+    <button class="btn btn-primary full" onclick="register()">Create Account</button>
+    <p class="modal-switch">Have an account? <a href="#" onclick="switchModal('registerModal','loginModal')">Sign in</a></p>
+  </div>
+</div>
+
+<script src="js/supabase-client.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/home.js"></script>
+</body>
+</html>

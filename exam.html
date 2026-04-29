@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Exam — Говори</title>
+  <link rel="stylesheet" href="css/style.css"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body class="exam-page">
+
+<!-- HEADER -->
+<header class="exam-header">
+  <div class="exam-header-left">
+    <button class="back-btn" onclick="confirmLeave()">← Back</button>
+    <h1 class="exam-title-h" id="examTitleH">Loading...</h1>
+  </div>
+  <div class="timer" id="timer">
+    <span class="timer-icon">⏱</span>
+    <span id="timerDisplay">3:00:00</span>
+  </div>
+  <button class="submit-btn" style="width:auto;padding:10px 24px" onclick="submitExam()">Submit Exam</button>
+</header>
+
+<!-- BODY -->
+<div class="exam-body" id="examBody">
+  <div class="exam-main" id="examMain">
+    <div style="text-align:center;padding:80px;color:var(--muted)">Loading exam…</div>
+  </div>
+  <aside class="exam-sidebar">
+    <div class="sidebar-card">
+      <h3>Your Progress</h3>
+      <div class="progress-bar-wrap"><div class="progress-bar-fill" id="progressBar" style="width:0%"></div></div>
+      <div class="progress-label" id="progressLabel">0 of 0 answered</div>
+    </div>
+    <div class="sidebar-card">
+      <h3>Sections</h3>
+      <div id="sectionNav" style="display:flex;flex-direction:column;gap:8px"></div>
+    </div>
+    <button class="submit-btn" onclick="submitExam()">Submit Exam →</button>
+  </aside>
+</div>
+
+<!-- Results overlay -->
+<div id="resultsOverlay" style="display:none;position:fixed;inset:0;background:var(--paper);z-index:200;overflow-y:auto">
+  <div class="results-page">
+    <p style="color:var(--muted);margin-bottom:8px;font-size:14px;letter-spacing:2px;text-transform:uppercase">Your Score</p>
+    <div class="results-score" id="rScore">—</div>
+    <p class="results-label" id="rLabel"></p>
+    <div class="results-breakdown" id="rBreakdown"></div>
+    <button class="btn btn-primary" style="font-size:16px;padding:14px 40px" onclick="window.location.href='index.html'">Back to Home</button>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/supabase-client.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/exam.js"></script>
+</body>
+</html>

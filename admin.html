@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin — Говори</title>
+  <link rel="stylesheet" href="css/style.css"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-brand">
+    <span class="nav-logo">Г</span>
+    <span class="nav-name">Говори — Admin</span>
+  </div>
+  <div class="nav-links">
+    <a href="index.html" class="nav-link">← Back to Site</a>
+  </div>
+  <div class="nav-auth">
+    <div id="authLoggedIn" style="display:none">
+      <span class="user-greeting" id="userGreeting"></span>
+      <button class="btn btn-ghost" onclick="logout()">Sign Out</button>
+    </div>
+  </div>
+</nav>
+
+<main class="admin-page" id="adminPage" style="display:none">
+  <h1>Exam Manager</h1>
+  <p class="sub">Upload a JSON file to publish a new exam. Only admins can see this page.</p>
+
+  <!-- UPLOAD ZONE -->
+  <div class="upload-zone" onclick="document.getElementById('jsonFileInput').click()">
+    <div class="upload-zone-icon">📂</div>
+    <h3>Upload Exam JSON</h3>
+    <p>Click to choose a .json exam file, or drag and drop it here</p>
+    <input type="file" id="jsonFileInput" accept=".json" onchange="handleFileUpload(event)"/>
+  </div>
+
+  <!-- JSON PREVIEW -->
+  <div id="previewSection" style="display:none;margin-bottom:32px">
+    <h2 style="font-family:var(--font-display);margin-bottom:16px">Preview</h2>
+    <div class="sidebar-card" id="previewCard"></div>
+    <div style="display:flex;gap:12px;margin-top:16px">
+      <button class="btn btn-primary" onclick="publishExam()">✅ Publish Exam</button>
+      <button class="btn btn-ghost" onclick="cancelPreview()">Cancel</button>
+    </div>
+  </div>
+
+  <!-- EXAM LIST -->
+  <h2 style="font-family:var(--font-display);margin-bottom:16px">Published Exams</h2>
+  <div class="exam-list-admin" id="adminExamList">
+    <div style="color:var(--muted);font-size:14px">Loading…</div>
+  </div>
+
+  <!-- JSON FORMAT GUIDE -->
+  <div style="margin-top:48px">
+    <h2 style="font-family:var(--font-display);margin-bottom:16px">📋 JSON Format Guide</h2>
+    <div class="sidebar-card">
+      <pre style="font-size:13px;line-height:1.7;overflow-x:auto;white-space:pre-wrap;color:var(--ink)">{
+  "title": "Russian Basics — Exam 1",
+  "level": "A1 Beginner",
+  "sections": [
+    {
+      "name": "Multiple Choice",
+      "questions": [
+        {
+          "id": "q1",
+          "type": "mcq",
+          "question": "What does 'Привет' mean?",
+          "options": ["Goodbye", "Hello", "Thank you", "Please"],
+          "correctIndex": 1
+        }
+      ]
+    },
+    {
+      "name": "Fill in the Blank",
+      "questions": [
+        {
+          "id": "q2",
+          "type": "fill",
+          "question": "The Russian word for 'cat' is ___",
+          "answer": "кошка"
+        }
+      ]
+    },
+    {
+      "name": "Listening",
+      "questions": [
+        {
+          "id": "q3",
+          "type": "listening",
+          "question": "Listen and choose the correct translation",
+          "audioUrl": "https://your-storage-url.com/audio/clip1.mp3",
+          "options": ["Good morning", "Good evening", "Good night", "Goodday"],
+          "correctIndex": 0
+        }
+      ]
+    },
+    {
+      "name": "Sentence Ordering",
+      "questions": [
+        {
+          "id": "q4",
+          "type": "ordering",
+          "question": "Arrange the words to form a correct Russian sentence:",
+          "words": ["кошка", "Это", "моя"],
+          "correctOrder": ["Это", "моя", "кошка"]
+        }
+      ]
+    }
+  ]
+}</pre>
+    </div>
+  </div>
+</main>
+
+<!-- Access denied -->
+<div id="accessDenied" style="display:none;text-align:center;padding:120px 40px">
+  <div style="font-size:64px;margin-bottom:24px">🔒</div>
+  <h2 style="font-family:var(--font-display);font-size:32px;margin-bottom:12px">Access Denied</h2>
+  <p style="color:var(--muted);margin-bottom:24px">You must be an admin to view this page.</p>
+  <a href="index.html" class="btn btn-primary">Return Home</a>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/supabase-client.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/admin.js"></script>
+</body>
+</html>
