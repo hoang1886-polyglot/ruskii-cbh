@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Thư viện Tài liệu - Говори</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* CSS trang trí riêng cho danh sách tài liệu */
+        .doc-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .doc-card {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            border: 1px solid #eee;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .doc-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        }
+        .doc-name {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 20px;
+            line-height: 1.4;
+            word-wrap: break-word;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- THANH MENU -->
+    <nav class="nav">
+        <div class="nav-brand">
+            <span class="nav-logo">Г</span>
+            <span class="nav-name">Говори</span>
+        </div>
+        <div class="nav-links" id="navLinks">
+            <a href="index.html" class="nav-link">Trang chủ</a>
+            <a href="index.html#examsGrid" class="nav-link">Thi thử</a>
+            <a href="tai-lieu.html" class="nav-link active">Tài liệu</a>
+            <a href="admin.html" class="nav-link" id="adminLink" style="display:none">Admin</a>
+            <a href="upload.html" class="nav-link" id="uploadLink" style="display:none">Upload Tài Liệu</a>
+        </div>
+        <div class="nav-auth">
+            <div id="authLoggedOut">
+                <button class="btn btn-ghost" onclick="openModal('loginModal')">Sign In</button>
+            </div>
+            <div id="authLoggedIn" style="display:none">
+                <span class="user-greeting" id="userGreeting"></span>
+                <button class="btn btn-ghost" onclick="logout()">Sign Out</button>
+            </div>
+        </div>
+    </nav>
+
+    <div style="height: 100px;"></div>
+
+    <!-- KHU VỰC HIỂN THỊ TÀI LIỆU -->
+    <section style="max-width: 1000px; margin: 0 auto; padding: 20px;">
+        <h2 style="margin-bottom: 10px;">📚 Thư viện Tài liệu</h2>
+        <p style="color: #666; margin-bottom: 30px;">Tổng hợp các tài liệu học tập, file nghe và liên kết hữu ích.</p>
+        
+        <!-- Nơi Javascript sẽ nhét danh sách file/link vào -->
+        <div id="documentsList" class="doc-grid">
+            <p>Đang tải dữ liệu từ máy chủ...</p>
+        </div>
+    </section>
+
+    <!-- KẾT NỐI SCRIPTS -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase-client.js"></script> 
+    <script src="js/auth.js"></script>
+    <!-- Gắn file JS xử lý việc kéo dữ liệu từ Supabase về -->
+    <script src="js/tai-lieu.js"></script> 
+
+</body>
+</html>
