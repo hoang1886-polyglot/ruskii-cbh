@@ -21,16 +21,13 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
 
         // 2. LẤY FILE TỪ STORAGE (PDF, MP3, Ảnh...)
-        const { data: storageFiles, error: stError } = await _supabase.storage.from('tai-lieu').list('', { limit: 100 });
-        
+        const { data: storageFiles, error: stError } = await _supabase.storage.from('tai-lieu').list('tai-lieu', { limit: 100 });        
         if (!stError && storageFiles) {
             storageFiles.forEach(file => {
                 // Bỏ qua file rác hệ thống
                 if (file.name === '.emptyFolderPlaceholder') return;
-                
-                // Lấy link tải
-                const { data } = _supabase.storage.from('tai-lieu').getPublicUrl(file.name);
-                
+                // Thêm 'tai-lieu/' vào trước tên file để tạo đúng đường link
+                const { data } = _supabase.storage.from('tai-lieu').getPublicUrl('tai-lieu/' + file.name);
                 // Xóa dải số thời gian ở đầu tên file cho đẹp
                 let displayName = file.name;
                 if (displayName.includes('_')) {
