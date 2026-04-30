@@ -8,6 +8,7 @@
         {
           "id": "mc1",
           "type": "mcq",
+          "passage": "У каждого человека есть дом, в котором он живёт. Но у всех жителей Земли есть и общий дом – это планета Земля...",
           "question": "What does 'Привет' (Privet) mean?",
           "options": ["Goodbye", "Hello", "Thank you", "Please"],
           "correctIndex": 1
