@@ -64,4 +64,49 @@ document.addEventListener('DOMContentLoaded', () => {
             uploadBtn.disabled = false;
         }
     });
+
+    // --- XỬ LÝ PHẦN THÊM LINK DRIVE ---
+    const linkTitleInput = document.getElementById('linkTitle');
+    const linkUrlInput = document.getElementById('linkUrl');
+    const addLinkBtn = document.getElementById('addLinkBtn');
+    const linkStatus = document.getElementById('linkStatus');
+
+    if (addLinkBtn) {
+        addLinkBtn.addEventListener('click', async () => {
+            const title = linkTitleInput.value.trim();
+            const url = linkUrlInput.value.trim();
+
+            if (!title || !url) {
+                alert('Vui lòng điền đầy đủ Tên tài liệu và Link!');
+                return;
+            }
+
+            addLinkBtn.innerText = 'Đang lưu...';
+            addLinkBtn.disabled = true;
+            linkStatus.innerHTML = '';
+
+            try {
+                // Đẩy dữ liệu vào bảng 'external_links'
+                const { error } = await _supabase
+                    .from('external_links')
+                    .insert([ { title: title, url: url } ]);
+
+                if (error) throw error;
+
+                linkStatus.innerHTML = '<p>✅ Đã lưu link tài liệu thành công!</p>';
+                
+                // Xóa ô nhập để nhập cái mới
+                linkTitleInput.value = '';
+                linkUrlInput.value = '';
+
+            } catch (error) {
+                console.error('Lỗi lưu link:', error);
+                linkStatus.innerHTML = `<span style="color: red;">❌ Lỗi: ${error.message}</span>`;
+            } finally {
+                addLinkBtn.innerText = 'Lưu Link Tài Liệu';
+                addLinkBtn.disabled = false;
+            }
+        });
+    }
+
 });
