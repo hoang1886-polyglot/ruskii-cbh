@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
         try {
             // Lấy tên file gốc, thay thế khoảng trắng bằng dấu gạch ngang cho an toàn
             const fileName = file.name.replace(/\s+/g, '-');
-            const filePath = `tai-lieu/${Date.now()}_${fileName}`; // Thêm thời gian để tên file không bị trùng
+            const filePath = `${Date.now()}_${fileName}`;
 
             // 3. Gọi lệnh upload lên Supabase (Vào bucket tên là 'tai-lieu')
             const { data, error } = await _supabase.storage
