@@ -47,9 +47,20 @@
         </div>
 
         <button id="uploadBtn" class="btn btn-primary" style="width: 100%;">Tiến hành Tải lên</button>
-        
         <!-- Chỗ để hiển thị link hoặc thông báo sau khi up xong -->
         <div id="uploadStatus" style="margin-top: 20px; color: green; word-break: break-all;"></div>
+        <hr style="margin: 30px 0; border: none; border-top: 1px dashed #ccc;">
+        <h3 style="margin-bottom: 15px; color: #333;">Hoặc Thêm Link Google Drive / Nguồn ngoài</h3>
+        <div style="margin-bottom: 15px;">
+            <label style="display: block; margin-bottom: 8px; font-weight: bold;">Tên tài liệu:</label>
+            <input type="text" id="linkTitle" placeholder="Ví dụ: Audio Bài thi TRKI 2" style="display: block; width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;">
+        </div>
+        <div style="margin-bottom: 20px;">
+            <label style="display: block; margin-bottom: 8px; font-weight: bold;">Link tài liệu (Google Drive, Youtube...):</label>
+            <input type="text" id="linkUrl" placeholder="https://drive.google.com/..." style="display: block; width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;">
+        </div>
+        <button id="addLinkBtn" class="btn btn-primary" style="width: 100%; background-color: #2c3e50;">Lưu Link Tài Liệu</button>
+        <div id="linkStatus" style="margin-top: 20px; color: green; word-break: break-all;"></div>
     </div>
 
     <!-- KẾT NỐI VỚI CÁC FILE JS CỦA BẠN -->
