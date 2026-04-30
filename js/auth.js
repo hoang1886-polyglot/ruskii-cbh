@@ -51,10 +51,14 @@ function updateAuthUI(user) {
     if (loggedIn)  loggedIn.style.display  = 'flex';
     if (greeting)  greeting.textContent = user.user_metadata?.full_name?.split(' ')[0] || user.email;
     if (adminLink) adminLink.style.display = ADMIN_EMAILS.includes(user.email) ? 'inline' : 'none';
+    if (uploadLink) uploadLink.style.display = ADMIN_EMAILS.includes(user.email) ? 'inline' : 'none'; 
   } else {
     if (loggedOut) loggedOut.style.display = 'flex';
     if (loggedIn)  loggedIn.style.display  = 'none';
     if (adminLink) adminLink.style.display  = 'none';
+    
+    // THÊM DÒNG NÀY: Giấu nút Upload đi khi chưa đăng nhập
+    if (uploadLink) uploadLink.style.display = 'none';
   }
 }
 
