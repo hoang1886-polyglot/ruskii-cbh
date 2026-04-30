@@ -28,7 +28,7 @@
 
 <main class="admin-page" id="adminPage" style="display:none">
   <h1>Exam Manager</h1>
-  <p class="sub">Upload a JSON file to publish a new exam. Only admins can see this page.</p>
+  <p class="sub">Upload file JSON lên</p>
 
   <!-- UPLOAD ZONE -->
   <div class="upload-zone" onclick="document.getElementById('jsonFileInput').click()">
@@ -58,60 +58,6 @@
   <div style="margin-top:48px">
     <h2 style="font-family:var(--font-display);margin-bottom:16px">📋 JSON Format Guide</h2>
     <div class="sidebar-card">
-      <pre style="font-size:13px;line-height:1.7;overflow-x:auto;white-space:pre-wrap;color:var(--ink)">{
-  "title": "Russian Basics — Exam 1",
-  "level": "A1 Beginner",
-  "sections": [
-    {
-      "name": "Multiple Choice",
-      "questions": [
-        {
-          "id": "q1",
-          "type": "mcq",
-          "question": "What does 'Привет' mean?",
-          "options": ["Goodbye", "Hello", "Thank you", "Please"],
-          "correctIndex": 1
-        }
-      ]
-    },
-    {
-      "name": "Fill in the Blank",
-      "questions": [
-        {
-          "id": "q2",
-          "type": "fill",
-          "question": "The Russian word for 'cat' is ___",
-          "answer": "кошка"
-        }
-      ]
-    },
-    {
-      "name": "Listening",
-      "questions": [
-        {
-          "id": "q3",
-          "type": "listening",
-          "question": "Listen and choose the correct translation",
-          "audioUrl": "https://your-storage-url.com/audio/clip1.mp3",
-          "options": ["Good morning", "Good evening", "Good night", "Goodday"],
-          "correctIndex": 0
-        }
-      ]
-    },
-    {
-      "name": "Sentence Ordering",
-      "questions": [
-        {
-          "id": "q4",
-          "type": "ordering",
-          "question": "Arrange the words to form a correct Russian sentence:",
-          "words": ["кошка", "Это", "моя"],
-          "correctOrder": ["Это", "моя", "кошка"]
-        }
-      ]
-    }
-  ]
-}</pre>
     </div>
   </div>
 </main>
