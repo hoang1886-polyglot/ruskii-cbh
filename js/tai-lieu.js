@@ -6,6 +6,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         // 1. LẤY LINK TỪ DATABASE
         const { data: dbLinks, error: dbError } = await _supabase.from('external_links').select('*');
+        console.log('DB links:', dbLinks);
+        console.log('DB error:', dbError);
         if (!dbError && dbLinks) {
             dbLinks.forEach(item => {
                 allDocs.push({
@@ -14,10 +16,10 @@ document.addEventListener('DOMContentLoaded', async () => {
                 });
             });
         }
-
         // 2. LẤY FILE TỪ STORAGE (Quét ở root)
         const { data: storageFiles, error: stError } = await _supabase.storage.from('tai-lieu').list('', { limit: 100 });
-        
+        console.log('Storage files:', storageFiles);   // <-- ADD THIS
+        console.log('Storage error:', stError);
         if (!stError && storageFiles) {
             storageFiles.forEach(file => {
                 // Bỏ qua thư mục hoặc file rác (thư mục thường không có id)
