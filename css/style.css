@@ -10,8 +10,8 @@
   --border:  #e0ddd6;
   --shadow:  0 4px 24px rgba(15,14,23,.10);
   --radius:  16px;
-  --font-display: 'Cormorant Garamond', serif;
-  --font-body:    'Lora', serif;
+  --font-display: 'Google Sans', serif;
+  --font-body: 'Google Sans', sans-serif;
 }
 
 /* ─── RESET ─────────────────────────────────────────────────── */
