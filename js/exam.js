@@ -112,12 +112,23 @@ function renderQuestion(q, sIdx, qIdx) {
     default:             inner = `<p style="color:var(--muted)">Unknown question type: ${q.type}</p>`;
   }
 
-  return `
-    <div class="question-block" id="qblock_${qId}">
-      <div class="question-num">Question ${qIdx + 1} · ${typeLabel(q.type)}</div>
-      <div class="question-text">${q.question || ''}</div>
-      ${inner}
-    </div>`;
+// Kiểm tra xem câu hỏi có chứa audioUrl không, nếu có thì tạo thẻ <audio>
+    let audioHtml = q.audioUrl ? `
+        <div style="margin: 15px 0;">
+            <audio controls style="width: 100%; max-width: 400px; border-radius: 8px;">
+                <source src="${q.audioUrl}" type="audio/mpeg">
+                Trình duyệt của bạn không hỗ trợ thẻ nghe audio.
+            </audio>
+        </div>
+    ` : '';
+
+    return `
+        <div class="question-block" id="qblock_${qId}">
+            <div class="question-num">Question ${qIdx + 1} · ${typeLabel(q.type)}</div>
+            <div class="question-text">${q.question || ''}</div>
+            ${audioHtml}
+            ${inner}
+        </div>`;
 }
 
 function typeLabel(t) {
